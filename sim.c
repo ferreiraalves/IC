@@ -191,7 +191,7 @@ int main(int argc, char const *argv[]) {
 
       v[corrente] += 0.25 * ((0.04 * (v[corrente] * v[corrente])) + 4.1 * v[corrente] + 108 - u[corrente] + I[corrente]);
       v[corrente] += 0.25 * ((0.04 * (v[corrente] * v[corrente])) + 4.1 * v[corrente] + 108 - u[corrente] + I[corrente]);
-      u[corrente] += 0.25 * a[corrente] * (b[corrente] * v[corrente] - u[corrente]);
+      u[corrente] += 0.5 * a[corrente] * (b[corrente] * v[corrente] - u[corrente]);
 
       //VERIFICA SE A POSICAO CORRENTE DISPAROU
       if (v[corrente] >= 30){
