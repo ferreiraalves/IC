@@ -17,7 +17,6 @@
 #define T1 50
 #define T2 200
 #define T3 300
-
 float cont=0;
 float gene[POP][LEN];
 
@@ -69,14 +68,14 @@ int main(int argc, char const *argv[]) {
 
   //Peso da entrada
 
-  a[0]=0.4;
+  a[0]=0.2;
   b[0]=-0.1;
   c[0]=-55;
   d[0]=4;
 
   //Peso dos Excitadores
   for (i = 1; i < Excitadores; i++){
-    a[i] = 0.4;
+    a[i] = 0.2;
     b[i] = -0.1;
     c[i] = -55;
     d[i] = 4;
@@ -84,7 +83,7 @@ int main(int argc, char const *argv[]) {
 
   //Peso dos Inibidores
   for (i = Excitadores; i < Rede; i++){
-    a[i] = 0.4;
+    a[i] = 0.2;
     b[i] = -0.1;
     c[i] = -55;
     d[i] = 4;

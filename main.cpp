@@ -39,13 +39,13 @@ int  start;		//start value for logGA (column "iteration")
 float fitness[POP];      //Fitness of each individual
 float gene[POP][LEN];    //global array containing the binary genotypes of popn
 
-float target1= 50;
-float target2= 70;
+float target1= 80;
+float target2= 120;
 
 //Protótipos
 void init_pop();
 void write_pop(int best);
-float evaluate (int n );
+float evaluate (int n, int mode);
 void read_conf_file();
 
 int main(){
@@ -76,12 +76,27 @@ int main(){
 		fitness[x]=0;
 		fitness[y]=0;
 		int t2;
-		for (t2=0;t2<30;t2++){
-			fitness[x]+=evaluate(x);
+
+		float evaux1a=0;
+		float evaux1b=0;
+		float evaux2a=0;
+		float evaux2b=0;
+
+
+
+		#pragma omp parallel for
+		for (t2=0;t2<15;t2++){
+			evaux1a+=evaluate(x,0)/15;
+			evaux1b+=evaluate(y,0)/15;
 		}
-		for (t2=0;t2<30;t2++){
-			fitness[y]+=evaluate(y);
+		#pragma omp parallel for
+		for (t2=0;t2<15;t2++){
+			evaux2a+=evaluate(x,1)/15;
+			evaux2b+=evaluate(y,1)/15;
 		}
+
+		fitness[x]=(evaux1a*evaux2a)/100;
+		fitness[y]=(evaux2a*evaux2b)/100;
 
 		//Verifica qual foi o vencedor
 		if (fitness[x] > fitness[y])  {W=x; L=y;}
@@ -118,7 +133,17 @@ int main(){
 		}
 	}
 	logDynamic=true;
-	printf("\nBest individual's (%d) internal dynamic saved - fitness: %9.5f",best, evaluate(best));
+	printf("\nBest individual's (%d) internal dynamic saved - fitness: %9.5f",best, evaluate(best,1)+evaluate(best,0));
+
+	float teste1=0;
+	float teste2=0;
+	for(i=0;i<100;i++){
+			teste1+= evaluate(best,1);
+			teste2+= evaluate(best,0);
+	}
+
+
+	printf("\nValue 1: %9.5f\tValue2:%9.5f",teste1/100,teste2/100);
 	write_pop(best);
 	fclose(file);
 	(void) time(&t2);
@@ -128,7 +153,7 @@ int main(){
 }
 
 //Avalia o fitness de um determinado robô da população.
-float evaluate (int n ){
+float evaluate (int n,int mode){
 	int m=0;
 	float cont=0;
 	float fitness =0.0; //Fitness do robô
@@ -156,13 +181,13 @@ float evaluate (int n ){
 
   //Peso dos Exicitadores
 
-  a[0]=0.4;
+  a[0]=0.2;
   b[0]=-0.1;
   c[0]=-55;
   d[0]=4;
 
   for (i = 1; i < Excitadores; i++){
-    a[i] = 0.4;
+    a[i] = 0.2;
     b[i] = -0.1;
     c[i] = -55;
     d[i] = 4;
@@ -219,9 +244,22 @@ float evaluate (int n ){
 	float inputa=rand()%10+1;
 	float inputb=rand()%10+1;
 
-	while (inputa==inputb){
-		inputb=rand()%10+1;
+	if(mode){
+		while (inputa<inputb || inputa==inputb){
+			inputa=rand()%10+1;
+			inputb=rand()%10+1;
+		}
 	}
+
+	if(!mode){
+		while (inputa>inputb || inputa==inputb){
+			inputa=rand()%10+1;
+			inputb=rand()%10+1;
+		}
+	}
+
+
+
 	inputa=inputa*10;
 	inputb=inputb*10;
 	//printf("%f,%f",inputa,inputb);

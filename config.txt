@@ -1,7 +1,7 @@
 evolution=1; In order to log the dynamic of the best individual of the last simulation set evolution=0 (only this)
-loadPopulationFromFile=1;
+loadPopulationFromFile=0;
 trials=100;
 logDynamic=0;
-loadBestGeneFromFile=0;
+loadBestGeneFromFile=1;
 end=5000;
 start=0; Used to continue the evolution
