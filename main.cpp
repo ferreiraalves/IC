@@ -76,10 +76,10 @@ int main(){
 		fitness[x]=0;
 		fitness[y]=0;
 		int t2;
-		for (t2=0;t2<10;t2++){
+		for (t2=0;t2<30;t2++){
 			fitness[x]+=evaluate(x);
 		}
-		for (t2=0;t2<10;t2++){
+		for (t2=0;t2<30;t2++){
 			fitness[y]+=evaluate(y);
 		}
 
@@ -257,7 +257,7 @@ float evaluate (int n ){
       //ATUALIZA OS VALORES DE V e U
       v[corrente] += 0.25 * ((0.04 * (v[corrente] * v[corrente])) + 4.1 * v[corrente] + 108 - u[corrente] + I[corrente]);
       v[corrente] += 0.25 * ((0.04 * (v[corrente] * v[corrente])) + 4.1 * v[corrente] + 108 - u[corrente] + I[corrente]);
-      u[corrente] += 0.25 * a[corrente] * (b[corrente] * v[corrente] - u[corrente]);
+      u[corrente] += 0.5 * a[corrente] * (b[corrente] * v[corrente] - u[corrente]);
 
       //VERIFICA SE A POSI��O CORRENTE DISPAROU
 

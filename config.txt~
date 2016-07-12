@@ -2,6 +2,6 @@ evolution=1; In order to log the dynamic of the best individual of the last simu
 loadPopulationFromFile=0;
 trials=100;
 logDynamic=0;
-loadBestGeneFromFile=1;
+loadBestGeneFromFile=0;
 end=10000;
 start=0; Used to continue the evolution
